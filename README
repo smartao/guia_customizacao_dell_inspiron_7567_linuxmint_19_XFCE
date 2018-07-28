@@ -1,9 +1,0 @@
-# Instalando configurando SSH e instalando Ansible
-sudo ./s02*
-
-# Instalar programas com o Ansible
-sudo ansible-playbook s03-instalando-programas-p1.yml -i configuracoes/inventory
-
-# Instalando programas que nao funciona com ansible
-sudo ./s04*
-
