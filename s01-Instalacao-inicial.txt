@@ -1,0 +1,43 @@
+Linux Mint 19 Tara - XFCE
+
+Fontes:
+https://sites.google.com/site/easylinuxtipsproject/first-mint-xfce
+https://sites.google.com/site/easylinuxtipsproject/ssd
+
+### Instalacao ###
+
+Instalar o Linux mint 19 normalmente
+Lembrando que o layout do teclado é Inglês Americano
+Após finalizar entre no modo de recuperacao, precionando a tecla shift
+
+Selecione para entrar no modo root
+# vi /etc/default/grub
+Altera a linha
+DE: GRUB_CMDLINE_LINUX=""
+PARA: GRUB_CMDLINE_LINUX="acpi_backlight=native acpi_osi="
+# update-grub
+# reboot
+
+### Customizacao ### 
+
+# Instalar Placa de vídeo Nvidia 1050Ti
+sudo apt-add-repository ppa:graphics-drivers/ppa -y 
+sudo apt update
+sudo apt update; sudo apt install nvidia-390 nvidia-prime nvidia-settings -y
+sudo reboot
+
+# Configurando o grub para ativar recursos NVIDIA
+Edite o arquivo
+sudo vim /etc/default/grub
+
+Altere a linha
+DE:  GRUB_CMDLINE_LINUX_DEFAULT="quiet splash" 
+PARA:GRUB_CMDLINE_LINUX_DEFAULT="quiet splash nvidia-drm.modeset=1"
+
+# Atualize o grub
+sudo update-grub
+
+# Reinicie
+sudo reboot
+
+

@@ -1,0 +1,30 @@
+### Restaurar Backup ###
+
+Restaurar ~/.bashrc e o ~/.bash_aliases sergei e root
+Procedimento antigo (06/2017) https://goo.gl/uJWUoS
+
+Configurações do docker (ver imagens)
+https://drive.google.com/drive/folders/0B4Onidz5svZaaWRTaHV4T3pOYW8
+
+Migrar home antigo para usuário novo
+https://is.gd/329Y9C
+
+Migrar arquivos de configuração básico
+Arquivos de configuracoes para restaurar Home 
+
+Configurar icones das pastas (deve ser apenas depois de restaurar o backup)
+Editar o arquivo vim ~/.config/user-dirs.dirs
+Mudar pastas padrão conforme necessidade
+
+Padrão utilizado em casa 20180128
+XDG_DESKTOP_DIR="$HOME/Desktop"
+XDG_DOWNLOAD_DIR="$HOME/Midias/Downloads"
+XDG_PUBLICSHARE_DIR="$HOME/"
+XDG_MUSIC_DIR="$HOME/Midias/Musicas/"
+XDG_VIDEOS_DIR="$HOME/Midias/Videos/"
+XDG_TEMPLATES_DIR="$HOME/"
+XDG_DOCUMENTS_DIR="$HOME/"
+XDG_PICTURES_DIR="$HOME/"
+
+
+

@@ -1,0 +1,68 @@
+### Configurações ###
+
+# Configurar layout de data e hora que utilizo
+%a %d %b %H:%M 
+
+# Personalizar o tema utilizado
+xfconf-query -c xfwm4 -p /general/theme -s Mint-Y-Darker
+xfconf-query -c xsettings -p /Net/ThemeName -s Mint-Y-Darker
+xfconf-query -c xsettings -p /Net/IconThemeName -s "Numix-Circle"
+
+# Configurar compose (efeitos de janelas)
+Gerenciador de configurações >> Ajustes do gerenciador de Janelas >> Compositor
+Mostrar sombra sobre janelas de doca (Desativar opção)
+
+# Ativar sinapse para iniciar junto com o sistema 
+Menu >> Synape >> Preferencias >> Iniciar junto com o sistema
+
+# Ativar o redshift
+Menu >> redshift >> Iniciar automaticamente
+
+# Ativar o varieaty
+Menu >> Variety >> Iniciar automaticamente
+
+# Corrgindo a falha do VLC com a NVidia
+Menu >> VLC >> Ferrametnas >> Preferencias >> Video
+
+Altere
+DE:Saída: Automático
+PARA:Saída: Saída de vídeo do X11 (XCB) 
+
+# Atualizar icones da área de trabalho
+Desktop >> Botão Direito >> Configurações de área de trabalho >> Ícones
+Home - Desativar
+Lixeira - Ativar 
+
+# Ativar o Timeshift backup diario
+Configurar backup semanalmente
+
+# Desativar o Sync To VBlank
+Menu >> Nvidia X Server Settings >> X Screen 0 >> OpenGL >> Sync to VBlank (Desativar)
+
+Obs: Em alguns jogos como Dirt o Vsync deve ser ativado
+
+# Configurar terminar Tilix
+Aparẽncia
+Usar tema escuro
+
+Atalhos de teclado
+Sessão
+	Adicionar terminal a baixo: Alt + b
+	Adicionar terminal a direita: Alt + d
+Terminal
+	Maximizar terminal: Alt + f
+
+Padrão
+Geral
+Tamanho do terminal: Coluna 140 Linhas 34 (Monitor FullHD)
+Tamanho do terminal: Coluna 100 Linhas 20 (Monitor HD)
+
+Comando
+	Executar comando como um shell de login, ativar (Fonte: https://goo.gl/5yBrnk)
+Cor
+	Transparência: arrastar para o ínicio do botão acima, avançar.
+Rolagem
+	Desativar barra de rolagem
+    Limite de rolagem 10000
+
+

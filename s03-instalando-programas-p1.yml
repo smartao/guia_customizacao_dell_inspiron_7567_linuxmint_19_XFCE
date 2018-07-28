@@ -1,0 +1,245 @@
+# Playbook de configuração pos formatação do notebook
+
+---
+- hosts: all
+  gather_facts: true
+ 
+  vars:
+   usuario: sergei
+
+  tasks:
+    - name: ADICIONANDO | Repositorio Numix
+      raw: apt-add-repository ppa:numix/ppa -y
+
+    - name: ADICIONANDO | Repositorio Tilix
+      raw: add-apt-repository ppa:webupd8team/terminix -y 
+
+    - name: ADICIONANDO | Repositorio MPlayer
+      raw: add-apt-repository ppa:mc3man/mpv-tests -y
+  
+    - name: ADICIONANDO | Repositorio Notepadqq
+      raw: add-apt-repository ppa:notepadqq-team/notepadqq -y
+      
+    - name: ATUALIZANDO | Sourcelist 
+      apt: 
+        update_cache: yes
+   
+    - name: ADICIONANDO | Chave para instalacao do Google Chrome
+      apt_key: url=https://dl-ssl.google.com/linux/linux_signing_key.pub state=present
+
+    - name: ADICIONANDO | Repositorio Google Chrome
+      apt_repository:
+        repo: deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main
+        state: present
+        update_cache: yes
+
+    - name: INSTALANDO | Google Chorme Stable
+      apt:
+        name: google-chrome-stable
+        state: present
+
+    - name: INSTALANDO | Pacotes Rede
+      apt: name={{ item }} state=present
+      with_items:
+        - atop
+        - freerdp-x11
+        - gufw
+        - htop
+        - iotop
+        - iptraf-ng
+        - nmap
+        - openssh-server
+        - pptpd
+        - remmina
+        - remmina-plugin-rdp
+        - rsync
+        - tcpdump
+        - traceroute
+        - wireshark
+
+    - name: INSTALANDO | Pacotes Multimidia
+      apt: name={{ item }} state=present
+      with_items:
+        - audacious
+        - ffmpeg
+        - lynx
+        - moc
+        - picard
+        - vlc
+        - xboxdrv
+        - youtube-dl
+    
+    
+    - name: INSTALANDO | Pacotes Codescs
+      apt: name={{ item }} state=present
+      with_items:
+        - ubuntu-restricted-extras 
+        - ubuntu-restricted-addons
+        - libavcodec-extra 
+        - libavcodec-extra
+   
+    - name: INSTALANDO | Pacotes basicos
+      apt: name={{ item }} state=present
+      with_items:
+        - baobab
+        - bc
+        - calibre
+        - cmatrix
+        - cowsay
+        - cups-pdf
+        - curl
+        - docky
+        - gedit
+        - git
+        - gnome-system-monitor
+#        - gns3
+        - gsmartcontrol
+        - keepass2
+        - inxi
+        - linux-firmware
+        - luckybackup
+        - mono-complete
+        - mousepad
+        - redshift
+        - redshift-gtk
+        - screenfetch
+        - synapse
+        - sysstat
+#        - task # Nao encontrado na versao do Ubuntu 18.04 
+        - trash-cli
+        - tree
+        - ttf-mscorefonts-installer
+        - usb-creator-gtk
+        - variety
+        - vim
+        - xbacklight
+        - xfce4-goodies
+   
+    - name: INSTALANDO | Temas Numix
+      apt: name={{ item }} state=present
+      with_items:
+        - numix-icon-theme
+        - numix-icon-theme-circle
+
+    - name: INSTALANDO | Tilix
+      apt: name={{ item }} state=present
+      with_items:
+        - tilix
+
+    - name: INSTALANDO | Notepadqq
+      apt: name={{ item }} state=present
+      with_items:
+        - notepadqq
+    
+    - name: INSTALANDO | MPlayer
+      apt: name={{ item }} state=present
+      with_items:
+        - mpv
+
+    - name: CONFIGURANDO | Logs systemctl permanente
+      replace:
+        path: /etc/systemd/journald.conf
+        regexp: '^#Storage=auto'
+        replace: 'Storage=persistent'
+        
+    - name: CONFIGURANDO | Teclado em Ingles do Dell 7567
+      copy:
+        src: configuracoes/keyboard
+        dest: /etc/default
+#        mode: 0755
+    
+    - name: CONFIGURANDO | Pacotes recomendados
+      replace:
+        path: /etc/apt/apt.conf.d/00recommends
+        regexp: '"false"'
+        replace: '"true"'
+    
+    - name: CONFIGURANDO | Utilização de swap
+      lineinfile:
+        path: /etc/sysctl.conf
+        line: "vm.swappiness=10"
+
+    - name: VALIDANDO | Se hibernacao esta ativa
+      stat: path=Configurando 
+      register: hibernacao
+
+#    - name: CONFIGURANDO | Desativando Hibernação
+#      raw: mv -v /etc/polkit-1/localauthority/50-local.d/com.ubuntu.enable-hibernate.pkla /
+#      when: hibernacao.stat.exists
+
+    - name: CONFIGURANDO | Desativando touchpad P1
+      file:
+        path: /etc/udev/rules.d/01-touchpad.rules
+        state: touch
+        mode: 0755
+
+    - name: CONFIGURANDO | Desativando touchpad P2
+      blockinfile:
+        path: /etc/udev/rules.d/01-touchpad.rules
+        block: |
+          SUBSYSTEM=="input", KERNEL=="mouse[0-9]*", ACTION=="add", ENV{DISPLAY}=":0", ENV{XAUTHORITY}="/home/{{ usuario }}/.Xauthority", RUN+="/usr/bin/synclient TouchpadOff=1"
+          SUBSYSTEM=="input", KERNEL=="mouse[0-9]*", ACTION=="remove", ENV{DISPLAY}=":0", ENV{XAUTHORITY}="/home/{{ usuario }}/.Xauthority", RUN+="/usr/bin/synclient TouchpadOff=0"
+      
+    - name: CONFIGURANDO | Configurar o PS1 customizado para o Git
+      blockinfile:
+        path: /home/{{ usuario }}/.bashrc
+        block: |
+          # store colors
+          MAGENTA="\[\033[01;35m\]"
+          YELLOW="\[\033[01;33m\]"
+          BLUE="\[\033[01;34m\]"
+          LIGHT_GRAY="\[\033[0;37m\]"
+          CYAN="\[\033[01;36m\]"
+          GREEN="\[\033[01;32m\]"
+          RED="\[\033[01;31m\]"
+          VIOLET='\[\033[01;35m\]'
+           
+          function color_my_prompt {
+            local __user_and_host="$GREEN\u@\h"
+            local __cur_location="$BLUE\W"           # capital 'W': current directory, small 'w': full file path
+            local __git_branch_color="$GREEN"
+            local __prompt_tail="$VIOLET$"
+            local __user_input_color="$LIGHT_GRAY"
+            local __git_branch='$(__git_ps1)'; 
+            
+            # colour branch name depending on state
+            if [[ "$(__git_ps1)" =~ "*" ]]; then     # if repository is dirty
+                __git_branch_color="$RED"
+            elif [[ "$(__git_ps1)" =~ "$" ]]; then   # if there is something stashed
+                __git_branch_color="$YELLOW"
+            elif [[ "$(__git_ps1)" =~ "%" ]]; then   # if there are only untracked files
+                __git_branch_color="$LIGHT_GRAY"
+            elif [[ "$(__git_ps1)" =~ "+" ]]; then   # if there are staged files
+                __git_branch_color="$CYAN"           
+            else                                    # if there are no changes
+                __git_branch_color="$LIGHT_GRAY"
+            fi
+             
+            # Build the PS1 (Prompt String)
+            PS1="$__user_and_host $__cur_location$__git_branch_color$__git_branch $__prompt_tail$__user_input_color "
+          }
+           
+          # configure PROMPT_COMMAND which is executed each time before PS1
+          export PROMPT_COMMAND=color_my_prompt
+           
+          # if .git-prompt.sh exists, set options and execute it
+          if [ -f ~/.git-prompt.sh ]; then
+            GIT_PS1_SHOWDIRTYSTATE=true
+            GIT_PS1_SHOWSTASHSTATE=true
+            GIT_PS1_SHOWUNTRACKEDFILES=true
+            GIT_PS1_SHOWUPSTREAM="auto"
+            GIT_PS1_HIDE_IF_PWD_IGNORED=true
+            GIT_PS1_SHOWCOLORHINTS=true
+            . ~/.git-prompt.sh
+          fi
+
+#    - name: CONFIGURANDO | Desativando Apparmor
+#      raw: systemctl disable apparmor.service
+
+    - name: ATUALIZANDO | Upgrade de todos os pacotes
+      apt: 
+        update_cache: yes
+        upgrade: full
+
+
+

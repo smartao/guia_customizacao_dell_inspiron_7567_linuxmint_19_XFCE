@@ -1,0 +1,12 @@
+### Ignorados ###
+
+# Desativar o app armor
+sudo systemctl stop apparmor
+sudo systemctl disable apparmor
+
+#Instalar Codecs
+sudo apt install ubuntu-restricted-extras ubuntu-restricted-addons libavcodec-extra libavcodec-extra
+
+# Instalar as fontes da Microsoft
+wget http://ftp.de.debian.org/debian/pool/contrib/m/msttcorefonts/ttf-mscorefonts-installer_3.6_all.deb
+sudo dpkg -i ttf-mscorefonts-installer_3.6_all.deb 
