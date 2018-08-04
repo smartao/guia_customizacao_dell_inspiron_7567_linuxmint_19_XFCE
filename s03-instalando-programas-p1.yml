@@ -189,7 +189,8 @@
           fi
 
      # https://gnunn1.github.io/tilix-web/manual/vteconfig/
-    - file:
+    - name: CONFIGURANDO | link simbolico Tilix
+      file:
         src: /etc/profile.d/vte-2.91.sh
         dest: /etc/profile.d/vte.sh
         owner: "{{ usuario }}"
