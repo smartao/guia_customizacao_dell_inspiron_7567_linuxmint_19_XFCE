@@ -1,4 +1,4 @@
-# Playbook de configuração pos formatação do notebook
+# Playbook de configuração pós formatação do notebook utilizando Linux Mint 19 XFCE
 
 ---
 - hosts: all
@@ -69,8 +69,7 @@
         - xboxdrv
         - youtube-dl
     
-    
-    - name: INSTALANDO | Pacotes Codescs
+    - name: INSTALANDO | Pacotes Codecs
       apt: name={{ item }} state=present
       with_items:
         - ubuntu-restricted-extras 
@@ -92,7 +91,6 @@
         - gedit
         - git
         - gnome-system-monitor
-#        - gns3 # Nao utilizado mais
         - gsmartcontrol
         - keepass2
         - inxi
@@ -105,7 +103,6 @@
         - screenfetch
         - synapse
         - sysstat
-#        - task # Nao encontrado na versao do Ubuntu 18.04 
         - trash-cli
         - tree
         - ttf-mscorefonts-installer
@@ -114,6 +111,8 @@
         - vim
         - xbacklight
         - xfce4-goodies
+#        - gns3 # Nao utilizado mais
+#        - task # Nao encontrado na versao do Ubuntu 18.04 
    
     - name: INSTALANDO | Temas Numix
       apt: name={{ item }} state=present
