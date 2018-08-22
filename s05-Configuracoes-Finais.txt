@@ -47,8 +47,8 @@ Usar tema escuro
 
 Atalhos de teclado
 Sessão
-	Adicionar terminal a baixo: Alt + b
-	Adicionar terminal a direita: Alt + d
+	Adicionar terminal a baixo: Alt + h
+	Adicionar terminal a direita: Alt + v
 Terminal
 	Maximizar terminal: Alt + f
 
