@@ -88,6 +88,7 @@
         - cups-pdf
         - curl
         - docky
+        - flameshot
         - gedit
         - git
         - gnome-system-monitor
